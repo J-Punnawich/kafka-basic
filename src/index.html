@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>LIFF - LINE Front-end Framework</title>
+   <style>
+      body {
+         margin: 16px
+      }
+
+      button,
+      img {
+         display: none;
+         width: 40%
+      }
+
+      button {
+         padding: 16px
+      }
+   </style>
+</head>
+
+<body>
+   <h1>Page 2</h1>
+   <!-- ใช้การ login ด้วย line LIFF เพื่อเอา userId ของเรามา -->
+   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+   <script>
+      function logOut() {
+         liff.logout()
+         window.location.reload()
+      }
+
+      <!-- Liff init จะ force login -->
+
+      async function main() {
+         await liff.init({ liffId: '2005573394-BlnvMO5j' })
+         if (liff.isInClient()) {
+            const profile = await liff.getProfile()
+            console.log('new profile', profile)
+         } else {
+            if (liff.isLoggedIn()) {
+               const profile = await liff.getProfile()
+               console.log('login profile', profile)
+            } else {
+               liff.login()
+            }
+         }
+      }
+      main()
+   </script>
+</body>
+
+</html>
+
+
+<!-- curl -v -X POST https://api.line.me/v2/bot/message/push \
+-H 'Content-Type: application/json' \
+-H 'Authorization: Bearer dVerLrqYsGuE1kpuu+jTmciMv9xF3V/9489g54duAPTNXGloDmm/S7jDCvxNur6WG+b+tZ+Bymv2gy9tX9ONdt1/IfEwtZgJ2v7DrG8q7y7M7VyIuIEChMxYTF1TuQxGfNBXYVhC++MNjf0dQNTpPwdB04t89/1O/w1cDnyilFU=' \
+-d '{
+    "to": "U4935476fa3a6625fd9be91177175e6ab",
+    "messages":[
+        {
+            "type":"text",
+            "text":"Hello, world1"
+        },
+        {
+            "type":"text",
+            "text":"Hello, world2"
+        }
+    ]
+}' -->
